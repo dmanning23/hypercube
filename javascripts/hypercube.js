@@ -17,6 +17,7 @@ $(document).ready(function(){
     //Object Variables
     var dimension = 1;
     var a = 0, b = 0;
+	var mouseX = 0, mouseY = 0;
     var x = 0, y = 0, z = 0;
 
     var zIndexBase = 10; // base zIndex to calculate from. Not a minimum!
@@ -93,8 +94,8 @@ $(document).ready(function(){
                     //assign the calculated value to the current vertex
                     with ($verts[vertIndex].style)
                     {
-                        left = hCenter + u * (w + 2) * vertSpacing;
-                        top  = vCenter + v * (w + 2) * vertSpacing;
+                        left = mouseX + u * (w + 2) * vertSpacing;
+                        top  = mouseY + v * (w + 2) * vertSpacing;
                         color = 'rgb(0, ' + c + ', 0)';
                         fontSize = (w + 2) * vertSize + "px";
                         zIndex = zIndexBase + Math.floor( w * 2 );
@@ -113,8 +114,10 @@ $(document).ready(function(){
         //When the mouse moves, capture the cursor's x and y coords as (a, b)
         .bind('mousemove',
         function(e){
-            a = e.clientX / 99;
-            b = e.clientY / 99;
+			mouseX = e.clientX;
+			mouseY = e.clientY;
+            a = e.clientX / (vertSpacing * 2);
+            b = e.clientY / (vertSpacing * 2);
         })
         //when the mousewheel spins reset the vertex spacing and vertex size for a "zoom" effect
         .mousewheel(function(event, delta) {
